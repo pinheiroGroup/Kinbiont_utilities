@@ -3,10 +3,10 @@ In this folder it is possible to find the scripts and data to replicate the anal
 
 
 Please note that to perform the fit it is necessary to extract the data with cleaned data.
-To match isolate number and names, pleas look at the original github https://github.com/smithtp/isolate-chem-mixtures/
+To match isolate number and names, please look at the original github https://github.com/smithtp/isolate-chem-mixtures/
 
 
-1. 'loop_chem_isolates_analysis_NL.jl' perform the NL fit with Richards model of all experiments
-2. 'Loop_DT_with_maxdeph.jl ' perform the decision tree regression on all strains at different depth. It return Impurity scores, Impurity rank and 10-flod cross validation R^2 for each parameter depth and strain
-3. 'Loop_DT_with_maxdeph.jl ' perform the decision tree regression on mixture and N. soli at different depth. It return Impurity scores, Impurity rank and 10-flod cross validation R^2 for each parameter depth and the plots of the trees.
+1. 'loop_chem_isolates_analysis_NL.jl' performs the NL fit with Richards model of all experiments
+2. 'Loop_DT_with_maxdeph.jl ' performs the decision tree regression on all strains at different depth. It returns the Impurity scores, the Impurity rank, and the 10-fold cross validation R^2 for each parameter depth and strain
+3. 'Loop_DT_with_maxdeph.jl ' performs the decision tree regression on mixture and N. soli at different depth. It returns the impurity scores, the Impurity rank, and the 10-flod cross validation R^2 for each parameter depth and the plots of the trees.
 

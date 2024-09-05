@@ -1,4 +1,4 @@
-using KinBiont
+using Kinbiont
 using Plots
 using CSV, DataFrames
 using Statistics
@@ -9,7 +9,7 @@ using AbstractTrees
 using MLJDecisionTreeInterface
 using TreeRecipe
 
-kimchi_res_test = readdlm("/df_for_ML/res_clean_ML_richards.csv", ',')
+Kinbiont_res_test = readdlm("/df_for_ML/res_clean_ML_richards.csv", ',')
 annotation_test = readdlm("df_for_ML/annotation_clean_richards.csv", ',')
 
 ordered_strain = annotation_test[:, end]
@@ -52,9 +52,9 @@ for s in list_strain
 
         index_strain = findall(s .== ordered_strain)
         feature_matrix = annotation_test[index_strain, 2:(end-1)]
-        kimchi_results = kimchi_res_test[:, index_strain]
+        Kinbiont_results = Kinbiont_res_test[:, index_strain]
 
-        dt_gr = downstream_decision_tree_regression(kimchi_results,
+        dt_gr = downstream_decision_tree_regression(Kinbiont_results,
             feature_matrix,
             9;
             do_pruning=false,
@@ -72,7 +72,7 @@ for s in list_strain
  
         savefig(p2,string(string(s),"_dt_gr.svg"))
 
-        dt_nmax = downstream_decision_tree_regression(kimchi_results,
+        dt_nmax = downstream_decision_tree_regression(Kinbiont_results,
             feature_matrix,
             5;
             do_pruning=false,
@@ -90,7 +90,7 @@ for s in list_strain
      
             savefig(p2,string(string(s),"_dt_N_max.svg"))
     
-        dt_lag = downstream_decision_tree_regression(kimchi_results,
+        dt_lag = downstream_decision_tree_regression(Kinbiont_results,
             feature_matrix,
             8;
             do_pruning=false,

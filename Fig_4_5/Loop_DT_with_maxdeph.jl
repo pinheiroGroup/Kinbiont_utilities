@@ -1,4 +1,4 @@
-using KinBiont
+using Kinbiont
 using Plots
 using CSV, DataFrames
 using Statistics
@@ -8,8 +8,8 @@ using Random
 
 
 
-kimchi_res_test = readdlm("/df_for_ML/res_clean_ML_richards.csv", ',')
-annotation_test = readdlm("/df_for_ML/annotation_clean_richards.csv", ',')
+Kinbiont_res_test = readdlm("/Users/fabrizio.angaroni/Documents/KinBiont_utilities-main/Fig_4_5/df_for_ML/res_clean_ML_richards.csv", ',')
+annotation_test = readdlm("/Users/fabrizio.angaroni/Documents/KinBiont_utilities-main/Fig_4_5/df_for_ML/annotation_clean_richards.csv", ',')
 
 ordered_strain = annotation_test[:, end]
 n_folds = 10
@@ -37,7 +37,7 @@ avg_lag_n_folds_cv = vcat("Strain","depth", "avg_R2")
 lag_impurity_importance = vcat("Strain","depth", feature_names)
 lag_split_importance = vcat("Strain","depth", feature_names)
 
-list_strain = unique(kimchi_res_test[(3), 2:end])
+list_strain = unique(Kinbiont_res_test[(3), 2:end])
 
 
 
@@ -53,8 +53,8 @@ for d in seq_of_depths
 
         index_strain = findall(s .== ordered_strain)
         feature_matrix = annotation_test[index_strain, 2:(end-1)]
-        kimchi_results = kimchi_res_test[:, index_strain]
-        dt_gr = downstream_decision_tree_regression(kimchi_results,
+        Kinbiont_results = Kinbiont_res_test[:, index_strain]
+        dt_gr = downstream_decision_tree_regression(Kinbiont_results,
             feature_matrix,
             9;
             do_pruning=false,
@@ -67,7 +67,7 @@ for d in seq_of_depths
         )
 
 
-        dt_nmax = downstream_decision_tree_regression(kimchi_results,
+        dt_nmax = downstream_decision_tree_regression(Kinbiont_results,
             feature_matrix,
             5;
             do_pruning=false,
@@ -79,7 +79,7 @@ for d in seq_of_depths
             seed=seed)
 
 
-        dt_lag = downstream_decision_tree_regression(kimchi_results,
+        dt_lag = downstream_decision_tree_regression(Kinbiont_results,
             feature_matrix,
             8;
             do_pruning=false,

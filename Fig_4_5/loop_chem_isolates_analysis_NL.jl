@@ -1,4 +1,4 @@
-using KinBiont
+using Kinbiont
 using CSV
 
 
@@ -28,7 +28,7 @@ for plate in list_of_data_chem
     fit_nl = fit_NL_model_selection_file(
         string("Richards_", temp_name), #label of the experiment
     path_to_data    , # path to the folder to analyze
-    nl_model, # ode model to use
+    nl_model, #  model to use
     p_guess;# initial guess param
     lb_param_array =lb_nl, # lower bound param
     ub_param_array = ub_nl, # upper bound param

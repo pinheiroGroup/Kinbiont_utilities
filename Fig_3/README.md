@@ -3,8 +3,6 @@ In this folder are present data and script to replicate the automatic detection 
 
 1. 'comparison_preprocessing_EXP1.jl' in this script we perfom  ODE fittings of experiment 1. Here we compare the presence and absence of Multiple scattering correction and blank subtraction.
    
-2. 'comparison_preprocessing_EXP2.jl' in this script we perfom  ODE fittings of experiment 2. Here we compare the presence and absence of Multiple scattering correction and blank subtraction.
-
-3. 'fit_seg_experiment_1_plus_ml.jl' in this script we fit a file with a segmented ODE and then we perform the symbolic regression on both strain and growth rate and total growth.
+2. 'fit_seg_experiment_1_plus_ml.jl' in this script we fit a file with a segmented ODE and then we perform the symbolic regression on both strain and growth rate and total growth.
 
 

@@ -1,12 +1,13 @@
-using KinBiont
+using Kinbiont
 using SymbolicRegression
 using Plots
 using Tables
+using CSV
 
-path_to_data = string("E:/Lavoro/detection_Monod_laws/data/Exp_1/channel_1.csv")
-path_to_annotation = string("E:/Lavoro/detection_Monod_laws/data/Exp_1/annotation.csv")
-path_to_calib = string("E:/Lavoro/detection_Monod_laws/data/cal_curve_avg.csv")
-path_to_results = string("E:/Lavoro/detection_Monod_laws/seg/")
+path_to_data = string("/Fig_3/data/Exp_1/channel_1.csv")
+path_to_annotation = string("//Fig_3/data/Exp_1/annotation.csv")
+path_to_calib = string("/Fig_3/data//cal_curve_avg.csv")
+path_to_results = string("/res/")
 
 
 model1 = "HPM_exp"
@@ -250,7 +251,6 @@ res_second_seg_ML = hcat(res_second_seg[:,1],res_second_seg_ML)
 feature_matrix =vcat(feature_matrix,["zero" 0.0])
 res_second_seg_ML=hcat(res_second_seg_ML , reduce(vcat,["zero" ,"zero", "zero", 0.0 ,  0.0 ,0.0 ,0.0 ,0.0 ,0.0 ]))
 
-res_second_seg_ML
 
 options = SymbolicRegression.Options(;
  binary_operators=[+,  /, * , -]  ,
@@ -325,7 +325,6 @@ res_second_seg_ML = hcat(res_second_seg[:,1],res_second_seg_ML)
 feature_matrix =vcat(feature_matrix,["zero" 0.0])
 res_second_seg_ML=hcat(res_second_seg_ML , reduce(vcat,["zero" ,"zero", "zero", 0.0 ,  0.0 ,0.0 ,0.0 ,0.0 ,0.0 ]))
 
-res_second_seg_ML
 
 options = SymbolicRegression.Options(;
  binary_operators=[+,  /, * , -]  ,
@@ -365,3 +364,6 @@ plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg
 plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg[3][:,4]),label=[ "Eq. 4" nothing],line=(2,:black,))
 plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg[3][:,5]),label=[ "Eq. 5" nothing],line=(2,:violet,))
  
+
+
+

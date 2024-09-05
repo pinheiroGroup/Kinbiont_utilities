@@ -1,4 +1,4 @@
-using KinBiont
+using Kinbiont
 using CSV
 using Tables
 using StatsBase
@@ -30,9 +30,9 @@ list_lb_param =[ub_exp,ub_hpm,ub_hpm_exp,ub_logistic,ub_dhpm_d]
 list_ub_param =[lb_exp,lb_hpm,lb_hpm_exp,lb_logistic,lb_dhpm_d]
 list_guess = list_lb_param .+ (list_ub_param .- list_lb_param)./2
 
-
-path_to_data = string("/data/coli_phages/10^8cfu.csv")
-path_to_results = string("/res/coli_phages/")
+# Please change the paths 
+path_to_data = string("../KinBiont_utilities-main/Fig_2/data/coli_phages/10^8cfu.csv")
+path_to_results = string("//")
 
 
 # number of segment

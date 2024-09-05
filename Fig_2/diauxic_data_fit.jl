@@ -1,4 +1,4 @@
-using KinBiont
+using Kinbiont
 using CSV
 using Tables
 using StatsBase
@@ -35,7 +35,7 @@ data_1 = CSV.File("/data/diauxic/data_modified_1.csv", transpose=true, missingst
 
 
 path_to_results = string("/res/diauxic/")
-
+path_to_plot = string("/plot/diauxic/")
 
 # number of segment
 segment_number = [0, 1, 2, 3 ,4,5]

@@ -1,5 +1,5 @@
 
-using KinBiont
+using Kinbiont
 
 
 path_to_data = string("/data/Exp_1/channel_1.csv")
@@ -7,13 +7,13 @@ path_to_annotation = string("/data/Exp_1/annotation.csv")
 
 
 path_to_calib = string("/data/cal_curve_avg.csv")
-path_to_results = string("/res/")
+path_to_results = string("/results/")
 
 
 model = "HPM"
 
 lb_param = [0.00001, 0.000001, 0.01]
-ub_param =[0.5,       1.5,     2.5]
+ub_param =[0.5,       1.5,     5.5]
 param_guess =[0.01, 0.01, 1.02]
     
 fit_od = fit_file_ODE(

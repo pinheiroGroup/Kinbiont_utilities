@@ -1,5 +1,5 @@
 
-This folder presents the script to fit with segmetend ODE model the following
+This folder presents the scripts to fit with segmetend ODE models the following:
 
 1. Diauxic data from "Diauxic lags explain unexpected coexistence in multi‐resource environments", 2022,  Bloxham  et al https://doi.org/10.15252/msb.202110630
 

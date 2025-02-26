@@ -6,17 +6,18 @@ using Distributions
 using Tables
 using SymbolicRegression
 using CSV
+using Random
 # adding function to plots please refer to correct file
 
 
 
 #################### 
 
-path_to_plots =  "/Users/fabrizio.angaroni/Documents/KinBiont_utilities-main/Dose_response_sym_regression/Plots/"
-path_to_res = "/Users/fabrizio.angaroni/Documents/KinBiont_utilities-main/Dose_response_sym_regression/Results/"
-path_to_calibration = "/Users/fabrizio.angaroni/Documents/KinBiont_utilities-main/Dose_response_sym_regression/Data/cal_curve_avg.csv"
-path_to_data = "/Users/fabrizio.angaroni/Documents/KinBiont_utilities-main/Dose_response_sym_regression/Data/data_channel_1.csv"
-path_to_annotation =  "/Users/fabrizio.angaroni/Documents/KinBiont_utilities-main/Dose_response_sym_regression/Data/annotation_channel_1_media_M9+glucose.csv"
+path_to_plots =  "/Dose_response_sym_regression/Plots/"
+path_to_res = "/Dose_response_sym_regression/Results/"
+path_to_calibration = "/Dose_response_sym_regression/Data/cal_curve_avg.csv"
+path_to_data = "/Dose_response_sym_regression/Data/data_channel_1.csv"
+path_to_annotation =  "/Dose_response_sym_regression/Data/annotation_channel_1_media_M9+glucose.csv"
 
 
     
@@ -101,13 +102,16 @@ options = SymbolicRegression.Options(;
  dimensional_constraint_penalty=nothing,
  alpha=0.100000,
  maxsize=10,
+ seed =1234,
  maxdepth=nothing,
  
 
 )
 
 # regression on growth rate
-    
+
+# First changing growth rate from 1/min to 1/h
+res_of_fitting[3,2:end] = res_of_fitting[3,2:end].*60
 gr_sy_reg = downstream_symbolic_regression(res_of_fitting,
     feature_matrix,
    3;
@@ -145,54 +149,9 @@ N = 100
 
 results = evaluate_expressions(expr_array, x_min, x_max, N)
 
-scatter( feature_matrix[:,2],res_of_fitting[3,2:end],xlabel= "Amino Acid concentration μM",ylabel = "Growth rate [1/Min]",label=[ "Data" nothing])
+scatter( feature_matrix[:,2],res_of_fitting[3,2:end],xlabel= "Chloramphenicol Concentration μM",ylabel = "Growth rate [1/h]",label=[ "Data" nothing])
 
 plot!(results[1],results[2][1],label=[ "Eq. 1" nothing], line=(3,:green,:dash,))
 plot!(results[1],results[2][2],label=[ "Eq. 2" nothing], line=(3,:red,))
 plot!(results[1] ,results[2][3],label=[ "Eq. 3" nothing],line=(3,:blue,:dashdot,))
 plot!(results[1] ,results[2][4],label=[ "Eq. 4" nothing],line=(2,:black,))
-plot!(results[1] ,results[2][5],label=[ "Eq. 5" nothing],line=(2,:black,))
-
-using SymbolicUtils
-
-using SymbolicUtils
-using Symbolics
-
-function find_matching_expressions(expr_array::Vector{String}, pattern_str::String)
-    # Define the symbolic variable
-    @variables x1
-
-    # Parse the pattern string into a symbolic expression
-    pattern_expr = Meta.parse(pattern_str)
-    pattern = Symbolics.build_function(pattern_expr)
-
-    # Initialize an array to hold indices of matching expressions
-    matching_indices = []
-
-    # Iterate over the expression strings
-    for (i, expr_str) in enumerate(expr_array)
-        # Parse the expression string into a symbolic expression
-        expr = Meta.parse(expr_str)
-        symbolic_expr = Symbolics.build_function(expr)
-        SymbolicUtils.simplify(expr)
-        # Check if the symbolic expression matches the pattern
-        if SymbolicUtils.ismatch(pattern, symbolic_expr)
-            push!(matching_indices, i)
-        end
-    end
-
-    return matching_indices
-end
-
-using Symbolics: match
-desired_form = 1 / (1 + x1)
-
-match_result = match(desired_form, SymbolicUtils.simplify(expr))
-
-
-SymbolicUtils.ismatch(pattern,  SymbolicUtils.simplify(expr))
-
-pattern_str = "1 / (1 + x1)"
-matching_indices = find_matching_expressions(expr_array, pattern_str)
-println("Expressions matching the pattern found at indices: ", matching_indices)
-symbolic_expr = SymbolicUtils.substitute(expr, Dict(:x1 => x1))

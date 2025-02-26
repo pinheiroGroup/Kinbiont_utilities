@@ -2,12 +2,31 @@ using Kinbiont
 using SymbolicRegression
 using Plots
 using Tables
+using SymPy
+
+function evaluate_expressions(expr_array::Vector{String}, x_min::Float64, x_max::Float64, N::Int)
+    # Define the symbolic variable
+    x1 = symbols("x1")
+    
+    # Convert character array into symbolic expressions
+    expressions = [sympy.sympify(expr) for expr in expr_array]
+    
+    # Generate N points between x_min and x_max
+    x_vals = range(x_min, x_max, length=N)
+    
+    # Evaluate each expression at each point in x_vals
+    results = [Float64[subs(expr, x1 => x) for x in x_vals] for expr in expressions]
+    
+    return x_vals,results
+end
+
+
 using CSV
 
 path_to_data = string("/Fig_3/data/Exp_1/channel_1.csv")
-path_to_annotation = string("//Fig_3/data/Exp_1/annotation.csv")
+path_to_annotation = string("/Fig_3/data/Exp_1/annotation.csv")
 path_to_calib = string("/Fig_3/data//cal_curve_avg.csv")
-path_to_results = string("/res/")
+path_to_results = string("/KinBiont_utilities-main/res/")
 
 
 model1 = "HPM_exp"
@@ -52,7 +71,9 @@ fit_file =  segmentation_ODE_file(
     ub_param_array=list_ub, # upper bound param
     maxiters = 200000
 )
-
+# changing units of time of gr from 1/min to 1/h
+fit_file[2][7,2:end] = fit_file[2][7,2:end] .* 60
+fit_file[2][6,2:end] = fit_file[2][6,2:end] .* 60
 
 
 fit_param =fit_file[2]
@@ -127,14 +148,21 @@ gr_sy_reg = downstream_symbolic_regression(res_first_seg_ML,
 )
  
  
-scatter( feature_matrix[:,2],res_first_seg_ML[7,2:end],xlabel= "Amino Acid concentration μM",ylabel = "Growth rate [1/Min]",label=[ "Data" nothing])
+# Example usage
+expr_array =string.( gr_sy_reg[1])
 
-hline!(unique(gr_sy_reg[3][:,1]),label=[ "Eq. 1" nothing], line=(3,:green,:dash,))
-plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg[3][:,2]),label=[ "Eq. 2" nothing], line=(3,:red,))
-plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg[3][:,3]),label=[ "Eq. 3" nothing],line=(3,:blue,:dashdot,))
-plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg[3][:,4]),label=[ "Eq. 4" nothing],line=(2,:black,))
-plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg[3][:,5]),label=[ "Eq. 5" nothing],line=(2,:violet,))
+x_min = convert(Float64,feature_matrix[1,2])
+x_max = convert(Float64,feature_matrix[end,2])
+N = 100
 
+results = evaluate_expressions(expr_array, x_min, x_max, N)
+
+scatter( feature_matrix[:,2],res_first_seg_ML[7,2:end],xlabel= "Aminoacid Concentration μM",ylabel = "Growth rate [1/h]",label=[ "Data" nothing])
+
+plot!(results[1],results[2][1],label=[ "Eq. 1" nothing], line=(3,:green,:dash,))
+plot!(results[1],results[2][2],label=[ "Eq. 2" nothing], line=(3,:red,))
+plot!(results[1] ,results[2][3],label=[ "Eq. 3" nothing],line=(3,:blue,:dashdot,))
+plot!(results[1] ,results[2][4],label=[ "Eq. 4" nothing],line=(2,:black,),legend=:bottomright)
  
 
 
@@ -203,16 +231,24 @@ gr_sy_reg = downstream_symbolic_regression(res_first_seg_ML,
 )
  
 
- 
-scatter( feature_matrix[:,2],res_first_seg_ML[7,2:end],xlabel= "Amino Acid concentration μM",ylabel = "Growth rate [1/Min]",label=[ "Data" nothing])
+# Example usage
+expr_array =string.( gr_sy_reg[1])
 
-hline!(unique(gr_sy_reg[3][:,1]),label=[ "Eq. 1" nothing], line=(3,:green,:dash,))
-plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg[3][:,2]),label=[ "Eq. 2" nothing], line=(3,:red,))
-plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg[3][:,3]),label=[ "Eq. 3" nothing],line=(3,:blue,:dashdot,))
-plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg[3][:,4]),label=[ "Eq. 4" nothing],line=(2,:black,))
-plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg[3][:,5]),label=[ "Eq. 5" nothing],line=(2,:violet,))
+x_min = convert(Float64,feature_matrix[1,2])
+x_max = convert(Float64,feature_matrix[end,2])
+N = 100
 
+results = evaluate_expressions(expr_array, x_min, x_max, N)
+
+scatter( feature_matrix[:,2],res_first_seg_ML[7,2:end],xlabel= "Aminoacid Concentration [μM]",ylabel = "Growth rate [1/h]",label=[ "Data" nothing])
+
+plot!(results[1],results[2][1],label=[ "Eq. 1" nothing], line=(3,:green,:dash,))
+plot!(results[1],results[2][2],label=[ "Eq. 2" nothing], line=(3,:red,))
+plot!(results[1] ,results[2][3],label=[ "Eq. 3" nothing],line=(3,:blue,:dashdot,))
+plot!(results[1] ,results[2][4],label=[ "Eq. 4" nothing],line=(2,:black,),legend=:bottomright)
  
+
+
 
 # N max regression
 
@@ -280,17 +316,25 @@ gr_sy_reg = downstream_symbolic_regression(res_second_seg_ML,
    5;
  #   options = options,
 )
- 
- 
-scatter( feature_matrix[:,2],res_second_seg_ML[5,2:end],xlabel= "Amino Acid concentration μM",ylabel = "Total Growth [OD]",label=[ "Data" nothing])
+# Example usage
+expr_array =string.( gr_sy_reg[1])
 
-hline!(unique(gr_sy_reg[3][:,1]),label=[ "Eq. 1" nothing], line=(3,:green,:dash,))
-plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg[3][:,2]),label=[ "Eq. 2" nothing], line=(3,:red,))
-plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg[3][:,3]),label=[ "Eq. 3" nothing],line=(3,:blue,:dashdot,))
-plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg[3][:,4]),label=[ "Eq. 4" nothing],line=(2,:black,))
-plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg[3][:,5]),label=[ "Eq. 5" nothing],line=(2,:violet,))
+x_min = convert(Float64,feature_matrix[1,2])
+x_max = convert(Float64,feature_matrix[end,2])
+N = 100
 
+results = evaluate_expressions(expr_array, x_min, x_max, N)
  
+
+scatter( feature_matrix[:,2],res_second_seg_ML[5,2:end],xlabel= "Aminoacid Concentration [μM]",ylabel ="Total Growth [OD]",label=[ "Data" nothing])
+
+plot!(results[1],results[2][1],label=[ "Eq. 1" nothing], line=(3,:green,:dash,))
+plot!(results[1],results[2][2],label=[ "Eq. 2" nothing], line=(3,:red,))
+plot!(results[1] ,results[2][3],label=[ "Eq. 3" nothing],line=(3,:blue,:dashdot,))
+plot!(results[1] ,results[2][4],label=[ "Eq. 4" nothing],line=(2,:black,),legend=:bottomright)
+ 
+
+
 # selecting strain S6
 
 annotation_test = CSV.File(path_to_annotation,header =false)
@@ -356,13 +400,15 @@ gr_sy_reg = downstream_symbolic_regression(res_second_seg_ML,
 )
  
 
-scatter( feature_matrix[:,2],res_second_seg_ML[5,2:end],xlabel= "Amino Acid concentration μM",ylabel = "Total Growth [OD]",label=[ "Data" nothing])
+results = evaluate_expressions(expr_array, x_min, x_max, N)
+ 
 
-hline!(unique(gr_sy_reg[3][:,1]),label=[ "Eq. 1" nothing], line=(3,:green,:dash,))
-plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg[3][:,2]),label=[ "Eq. 2" nothing], line=(3,:red,))
-plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg[3][:,3]),label=[ "Eq. 3" nothing],line=(3,:blue,:dashdot,))
-plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg[3][:,4]),label=[ "Eq. 4" nothing],line=(2,:black,))
-plot!(unique(convert.(Float64,feature_matrix[gr_sy_reg[4],2])) ,unique(gr_sy_reg[3][:,5]),label=[ "Eq. 5" nothing],line=(2,:violet,))
+scatter( feature_matrix[:,2],res_second_seg_ML[5,2:end],xlabel= "Aminoacid Concentration [μM]",ylabel ="Total Growth [OD]",label=[ "Data" nothing])
+
+plot!(results[1],results[2][1],label=[ "Eq. 1" nothing], line=(3,:green,:dash,))
+plot!(results[1],results[2][2],label=[ "Eq. 2" nothing], line=(3,:red,))
+plot!(results[1] ,results[2][3],label=[ "Eq. 3" nothing],line=(3,:blue,:dashdot,))
+plot!(results[1] ,results[2][4],label=[ "Eq. 4" nothing],line=(2,:black,),legend=:bottomright)
  
 
 

@@ -1,8 +1,10 @@
 
-In this folder are present data and script to replicate the automatic detection of the Monod laws and analyze the pre-processing  effects on parameters inference
+In  this folder are present data and script to replicate the automatic detection of the empirical laws.
 
-1. 'comparison_preprocessing_EXP1.jl' in this script we perfom  ODE fittings of experiment 1. Here we compare the presence and absence of Multiple scattering correction and blank subtraction.
+1. 'Dose_response_sym_regression' Symbolic regression pipeline to obtain antibiotic dose-response.
    
-2. 'fit_seg_experiment_1_plus_ml.jl' in this script we fit a file with a segmented ODE and then we perform the symbolic regression on both strain and growth rate and total growth.
+2. 'Monod_experiment' Symbolic regression pipeline to obtain Monod empirical laws.
+
+3. 'Plotting_Hall_of_fame'Script to plot the results of symbolic regression from a saved .csv
 
 

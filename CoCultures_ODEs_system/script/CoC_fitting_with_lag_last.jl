@@ -116,4 +116,4 @@ Plots.plot!(data_to_fit[1,:],sol[1,:], xlabel="Time [h]", ylabel="OD [Arb. Units
 Plots.scatter!(data_to_fit[1,:],data_to_fit[3,:], xlabel="Time [h]", ylabel="OD [Arb. Units]", label=["Data LP" nothing],color=:green,markersize =2 ,size = (300,300),marker=:diamond)
 Plots.plot!(data_to_fit[1,:],sol[2,:], xlabel="Time [h]", ylabel="OD [Arb. Units]",label=["fit LP" nothing],color=:green,markersize =4 ,size = (600,500),legendposition = :topleft,linewidth=4,linestyle=:dashdot,tickfontsize = 20,labelfontsize = 20,legendfontsize =11)
 
-savefig(string("E:/Lavoro/Kinbiont_utilities-main/CoC_fitting_double.svg"))
+savefig(string("../CoC_fitting_double.svg"))

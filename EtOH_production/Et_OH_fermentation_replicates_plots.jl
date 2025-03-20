@@ -125,7 +125,7 @@ lb_p2 = [0.0,  0.0, 0.0, 0.0, 0.0,]
 
 for i in 1:size(Biomass_data, 2)
     data_test = permutedims([Times Biomass_data[:, i] Sugar_data[:, i] EtOH_data[:, i]])
-
+    u0 = [  Biomass_data[1, i] , Sugar_data[1, i]  ,EtOH_data[1, i] ]
     fit_prod_EtOH = Kinbiont.fit_ODEs_System(
         data_test,
         string("EtOH_", i),  # Label for dataset
@@ -141,14 +141,14 @@ for i in 1:size(Biomass_data, 2)
     solt_to_plot = reduce(hcat, fitting.u)
 
 
-    display(scatter(data_test[1, :], data_test[2, :], xlabel="Time [h]", ylabel="[Biomass]/[EtOH]/[Sugar] [g/L]", label=["[Biomass] Data" nothing], color=:blue, markersize=6, size=(700, 600), legendposition=:topright, tickfontsize=20, labelfontsize=20, legendfontsize=11))
-    display(plot!(data_test[1, :], solt_to_plot[1, :], xlabel="Time [h]", ylabel="[Biomass]/[EtOH]/[Sugar] [g/L]", label=["[Biomass] Fit" nothing], color=:blue, markersize=4, size=(700, 600), legendposition=:topright, linewidth=4, tickfontsize=20, labelfontsize=20, legendfontsize=11))
+    display(scatter(data_test[1, :], data_test[2, :], xlabel="Time [h]", ylabel="[Biomass],[EtOH],[Sugar] [g/L]", label=["[Biomass] Data" nothing], color=:blue, markersize=6, size=(700, 600), legendposition=:topright, tickfontsize=20, labelfontsize=20, legendfontsize=11))
+    display(plot!(data_test[1, :], solt_to_plot[1, :], xlabel="Time [h]", ylabel="[Biomass]/[EtOH],[Sugar] [g/L]", label=["[Biomass] Fit" nothing], color=:blue, markersize=4, size=(700, 600), legendposition=:topright, linewidth=4, tickfontsize=20, labelfontsize=20, legendfontsize=11,alpha=0.5))
 
-    display(scatter!(data_test[1, :], data_test[3, :], xlabel="Time [h]", ylabel="[Biomass]/[EtOH]/[Sugar] [g/L]", label=["[Sugar] Data" nothing], color=:red, markersize=6, size=(700, 600), legendposition=:topright, tickfontsize=20, labelfontsize=20, legendfontsize=11, marker=:square))
-    display(plot!(data_test[1, :], solt_to_plot[2, :], xlabel="Time [h]", ylabel="[Biomass]/[EtOH]/[Sugar] [g/L]", label=["[Sugar] Fit" nothing], color=:red, markersize=4, size=(700, 600), legendposition=:topright, linewidth=4, tickfontsize=20, labelfontsize=20, legendfontsize=11, linestyle=:dash))
+    display(scatter!(data_test[1, :], data_test[3, :], xlabel="Time [h]", ylabel="[Biomass],[EtOH],[Sugar] [g/L]", label=["[Sugar] Data" nothing], color=:red, markersize=6, size=(700, 600), legendposition=:topright, tickfontsize=20, labelfontsize=20, legendfontsize=11, marker=:square))
+    display(plot!(data_test[1, :], solt_to_plot[2, :], xlabel="Time [h]", ylabel="[Biomass],[EtOH],[Sugar] [g/L]", label=["[Sugar] Fit" nothing], color=:red, markersize=4, size=(700, 600), legendposition=:topright, linewidth=4, tickfontsize=20, labelfontsize=20, legendfontsize=11, linestyle=:dash,alpha=0.5))
 
-    display(scatter!(data_test[1, :], data_test[4, :], xlabel="Time [h]", ylabel="[Biomass]/[EtOH]/[Sugar] [g/L]", label=["[EtOH] Data" nothing], color=:green, markersize=6, size=(700, 600), legendposition=:topright, tickfontsize=20, labelfontsize=20, legendfontsize=11, marker=:diamond))
-    display(plot!(data_test[1, :], solt_to_plot[3, :], xlabel="Time [h]", ylabel="[Biomass]/[EtOH]/[Sugar] [g/L]", label=["[Sugar] Fit" nothing], color=:green, markersize=4, size=(700, 600), legendposition=:topright, linewidth=4, tickfontsize=20, labelfontsize=20, legendfontsize=11, linestyle=:dot))
-    savefig(string("../EtOH_fermentation_replicate_fixed_in", i, ".svg"))
+    display(scatter!(data_test[1, :], data_test[4, :], xlabel="Time [h]", ylabel="[Biomass],[EtOH],[Sugar] [g/L]", label=["[EtOH] Data" nothing], color=:green, markersize=6, size=(700, 600), legendposition=:topright, tickfontsize=20, labelfontsize=20, legendfontsize=11, marker=:diamond))
+    display(plot!(data_test[1, :], solt_to_plot[3, :], xlabel="Time [h]", ylabel="[Biomass],[EtOH],[Sugar] [g/L]", label=["[Sugar] Fit" nothing], color=:green, markersize=4, size=(700, 600), legendposition=:topright, linewidth=4, tickfontsize=20, labelfontsize=20, legendfontsize=11, linestyle=:dot,alpha=0.5))
+    savefig(string("../EtOH_fermentation_replicate", i, ".svg"))
 
 end

@@ -89,39 +89,13 @@ function Monod_xx_batch(du, u, param, t)
 
 end
 
-function Monod_fixed_In_batch(du, u, param, t)
-    B1, S, EtOH = u
-    K_G, mu_max_1, Y_1, Y_2, lag = param
 
 
-
-    # Monod equation
-    Q = mu_max_1 * (S) / (K_G + S)
-    inhibition = 1
-    lag_factor = t / (t + lag)
-
-    mu = Q * inhibition * lag_factor
-
-    du[1] = mu * B1    #  bio mass dynamics
-
-    du[2] = -mu * B1 * Y_1     # Substrate dynamics
-
-    du[3] = mu * B1 * Y_2   #  EtOH dynamics
-
-
-end
-
-
-
-u0 = [data_test[2, 1], data_test[3, 1], data_test[4, 1]]  
-param = [2.5, 0.03, 0.02, 0.1, 2.5, 0.03]  #  
-ub_p = [500.5, 300000.0, 96.0, 10.0, 500.5, 300000.0]
+param = [4.5, 1000, 0.2, 0.1, 7.5, 0.03]  #  
+ub_p = [500.5,20000000.0, 2.0, 10.0, 500.5, 12.0]
 lb_p = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0,]
 
-param2 = [2.5, 0.02, 0.1, 2.5, 0.03]  #  
-ub_p2 = [500.5,  96.0, 10.0, 500.5, 300000.0]
-lb_p2 = [0.0,  0.0, 0.0, 0.0, 0.0,]
-
+results  = ["Replicate"   ,  "model_custom",   "K_G"   ,   "K_E"   , "mu_max"  ,  "Y_s"  ,  "Y_e"  ,    "lag"   ,  "loss"]
 
 for i in 1:size(Biomass_data, 2)
     data_test = permutedims([Times Biomass_data[:, i] Sugar_data[:, i] EtOH_data[:, i]])
@@ -134,13 +108,13 @@ for i in 1:size(Biomass_data, 2)
         u0; # Initial conditions
         ub=ub_p,
         lb=lb_p,
-        #  maxiter=100,
+          maxiter=10000000,
     )
     fit_prod_EtOH[2]
     fitting = fit_prod_EtOH[3]
     solt_to_plot = reduce(hcat, fitting.u)
 
-
+    results = hcat(results,fit_prod_EtOH[2][2,:])
     display(scatter(data_test[1, :], data_test[2, :], xlabel="Time [h]", ylabel="[Biomass],[EtOH],[Sugar] [g/L]", label=["[Biomass] Data" nothing], color=:blue, markersize=6, size=(700, 600), legendposition=:topright, tickfontsize=20, labelfontsize=20, legendfontsize=11))
     display(plot!(data_test[1, :], solt_to_plot[1, :], xlabel="Time [h]", ylabel="[Biomass]/[EtOH],[Sugar] [g/L]", label=["[Biomass] Fit" nothing], color=:blue, markersize=4, size=(700, 600), legendposition=:topright, linewidth=4, tickfontsize=20, labelfontsize=20, legendfontsize=11,alpha=0.5))
 
@@ -152,3 +126,5 @@ for i in 1:size(Biomass_data, 2)
     savefig(string("../EtOH_fermentation_replicate", i, ".svg"))
 
 end
+
+results

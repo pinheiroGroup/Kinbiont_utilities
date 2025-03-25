@@ -5,39 +5,124 @@ using Tables
 using SymbolicRegression
 using CSV
 using Random
-
+using Plots
 
 #################### 
 
 path_to_calibration = "../Data/cal_curve_avg.csv"
 path_to_data =        "../Data/data_channel_1.csv"
 path_to_annotation =  "../Data/Annotation_CHL_dosage.csv"
+path_to_plot = "../Fit_plots/Annotation_CHL_dosage.csv"
+model1 = "HPM_exp"
 
-Kinbiont_seg_analysis =  segment_gr_analysis_file(
-    path_to_data,
-    string("CHL_dose_response"); 
-    path_to_annotation = path_to_annotation,
-   #type_of_smoothing="lowess",
-    type_of_detection="slinding_win",
-    multiple_scattering_correction=true,
-    calibration_OD_curve=path_to_calibration,
-    type_of_curve="deriv",
-    win_size=16,
-    pt_avg =14,
-   # thr_negative=0.01,
-    pt_smoothing_derivative=10,
-    n_max_change_points = 1, 
-    correct_negative="remove", 
-   #thr_lowess=0.01,
+lb_param1 = [0.00001, 0.000001]
+ub_param1 =[0.5,       1.5]
+param_guess1 =[0.01, 0.01]
+    
+model2 = "logistic"
+
+lb_param2 = [0.00001, 0.000001]
+ub_param2 =[0.5,       2.5,    ]
+param_guess2 =[0.01, 1.01]
+    
+
+list_of_models = [model1,model2]
+list_guess=  [param_guess1,param_guess2]
+list_lb=  [lb_param1,lb_param2]
+list_ub=  [ub_param1,ub_param2]
+
+
+Kinbiont_seg_analysis =  segmentation_ODE_file(
+  "fit_chl_response", #label of the experiment
+  path_to_data, # path to the folder to analyze
+  list_of_models, # ode model to use 
+  list_guess, #  param
+  1;
+  path_to_annotation=path_to_annotation,# path to the annotation of the wells
+  detect_number_cpd=false,
+  fixed_cpd=false,
+  calibration_OD_curve=path_to_calibration,
+  multiple_scattering_correction=true, # if true uses the given calibration curve to fix the data
+  type_of_curve="deriv",
+  pt_smooth_derivative= 10,
+  verbose = true,
+  write_res =false,
+  win_size=12, # numebr of the point to generate intial condition
+  smoothing =true,
+  lb_param_array=list_lb, # lower bound param
+  ub_param_array=list_ub, # upper bound param
+  maxiters = 200000
 )
+## save the fits as svg
+Kinbiont_fits =Kinbiont_seg_analysis[3]
+
+Kinbiont_results_matrix =Kinbiont_seg_analysis[2]
+Kinbiont_data =Kinbiont_seg_analysis[4]
+Kinbiont_cp_intervals =Kinbiont_seg_analysis[5]
+well_names = unique(Kinbiont_seg_analysis[2][2,2:end])
 
 
 
+for i in eachindex(Kinbiont_fits)
+   fit_temp =Kinbiont_fits[i]
+   data_temp =Kinbiont_data[i]
+   temp_cp =Kinbiont_cp_intervals[i]
+   y_fit_temp =fit_temp[:,2]
+   x_fit_temp =fit_temp[:,1]
+   y_data_temp =data_temp[2,:]
+   x_data_temp =data_temp[1,:]
+   well_name = well_names[i]
 
-index_first_segment = findall(Kinbiont_seg_analysis[2][11,:].==1)
+   display(
+     Plots.scatter(
+         x_data_temp,
+         y_data_temp,
+         xlabel="Time",
+         ylabel="Arb. Units",
+         label=["Data " nothing],
+         markersize=4,
+         color=:black,
+         guidefontsize=15,
+         tickfontsize=15,
+         legendfontsize=15,
+         size=(400,300),
+     ),
+     )
 
-results_matrix = Kinbiont_seg_analysis[2][:,index_first_segment]
-results_matrix = hcat( Kinbiont_seg_analysis[2][:,1],results_matrix)
+     display(
+      Plots.plot(
+         x_data_temp,
+          y_fit_temp,
+          xlabel="Time",
+          ylabel="Arb. Units",
+          label=["Data " nothing],
+          markersize=4,
+          linesize = 4,
+          color=:red,
+          guidefontsize=15,
+          tickfontsize=15,
+          legendfontsize=15,
+          size=(400,300),
+      ),
+      )
+
+
+     display( Plots.vline!(
+         [temp_cp],
+         c=:black,
+         label=[string("Change point") nothing],
+         guidefontsize=guidefontsize,
+         tickfontsize=15,
+         legendfontsize=15,
+         size=(400,300),
+         ) )
+         savefig(string(path_to_plot,  "segmented_fit_", well_name, ".svg"))
+end
+## 
+
+index_first_segment = findall(Kinbiont_seg_analysis[2][9,:].==1)
+
+results_matrix =hcat(Kinbiont_seg_analysis[2][:,1] ,Kinbiont_seg_analysis[2][:,index_first_segment])
 
 
 # write results matrix
@@ -91,9 +176,8 @@ options = SymbolicRegression.Options(;
 
 gr_sy_reg = downstream_symbolic_regression(res_of_fitting,
     feature_matrix,
-   3;
+   6;
  #   options = options,
 )
  
 gr_sy_reg[1]
-

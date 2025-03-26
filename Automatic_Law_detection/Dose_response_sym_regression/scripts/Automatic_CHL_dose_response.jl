@@ -13,17 +13,18 @@ path_to_calibration = "../Data/cal_curve_avg.csv"
 path_to_data =        "../Data/data_channel_1.csv"
 path_to_annotation =  "../Data/Annotation_CHL_dosage.csv"
 path_to_plot = "../Fit_plots/Annotation_CHL_dosage.csv"
+mkpath(path_to_plot)
 model1 = "HPM_exp"
 
 lb_param1 = [0.00001, 0.000001]
-ub_param1 =[0.5,       1.5]
-param_guess1 =[0.01, 0.01]
+ub_param1 =[1.5,       10.5]
+param_guess1 =[0.1, 0.01]
     
 model2 = "logistic"
 
 lb_param2 = [0.00001, 0.000001]
-ub_param2 =[0.5,       2.5,    ]
-param_guess2 =[0.01, 1.01]
+ub_param2 =[1.5,       2.5    ]
+param_guess2 =[0.1, 1.01]
     
 
 list_of_models = [model1,model2]
@@ -44,10 +45,11 @@ Kinbiont_seg_analysis =  segmentation_ODE_file(
   calibration_OD_curve=path_to_calibration,
   multiple_scattering_correction=true, # if true uses the given calibration curve to fix the data
   type_of_curve="deriv",
-  pt_smooth_derivative= 10,
+  pt_smooth_derivative= 12,
   verbose = true,
   write_res =false,
-  win_size=12, # numebr of the point to generate intial condition
+  type_of_smoothing="rolling_avg",
+  win_size=10, # 
   smoothing =true,
   lb_param_array=list_lb, # lower bound param
   ub_param_array=list_ub, # upper bound param
@@ -85,24 +87,24 @@ for i in eachindex(Kinbiont_fits)
          guidefontsize=15,
          tickfontsize=15,
          legendfontsize=15,
-         size=(400,300),
+         size=(600,500),
      ),
      )
 
      display(
-      Plots.plot(
-         x_data_temp,
+      Plots.plot!(
+        x_fit_temp,
           y_fit_temp,
-          xlabel="Time",
-          ylabel="Arb. Units",
-          label=["Data " nothing],
+          xlabel="Time [h]",
+          ylabel="OD [arb. Units]",
+          label=["fit " nothing],
           markersize=4,
           linesize = 4,
           color=:red,
           guidefontsize=15,
           tickfontsize=15,
           legendfontsize=15,
-          size=(400,300),
+          size=(600,500),
       ),
       )
 
@@ -111,10 +113,11 @@ for i in eachindex(Kinbiont_fits)
          [temp_cp],
          c=:black,
          label=[string("Change point") nothing],
-         guidefontsize=guidefontsize,
+         guidefontsize=15,
          tickfontsize=15,
          legendfontsize=15,
-         size=(400,300),
+         legend=:bottomleft,
+         size=(600,500),
          ) )
          savefig(string(path_to_plot,  "segmented_fit_", well_name, ".svg"))
 end
@@ -146,7 +149,7 @@ res_of_fitting = results_matrix
 # add 0.0 0.0 data for not growing wells
 feature_matrix =feature_matrix[index_to_use,:]
 
-
+scatter(feature_matrix[:,2],results_matrix[6,2:end],xlabel= "CHL Concentration [μM]",ylabel = "Gr [1/h]",label=[ "Data" nothing],size = (600,500),markersize = 6,color= :red,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,legend=:bottomright)
 
 # define SymbolicRegression options
 options = SymbolicRegression.Options(;

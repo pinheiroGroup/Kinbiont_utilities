@@ -73,6 +73,8 @@ to_keep = intersect(index_strain,index_cc)
 feature_matrix = feature_matrix[to_keep,:]
 wells_to_use =  feature_matrix[:,1]
 index_res =Any
+
+
 for i in wells_to_use
     if i == wells_to_use[1]
       index_res = findfirst(res_first_seg[:,1:end] .== i)
@@ -127,22 +129,7 @@ gr_sy_reg = downstream_symbolic_regression(res_first_seg_ML,
 )
  
  
-# Example usage
-expr_array =string.( gr_sy_reg[1])
 
-x_min = convert(Float64,feature_matrix[1,2])
-x_max = convert(Float64,feature_matrix[end,2])
-N = 100
-
-results = evaluate_expressions(expr_array, x_min, x_max, N)
-
-scatter( feature_matrix[:,2],res_first_seg_ML[7,2:end],xlabel= "Aminoacid Concentration μM",ylabel = "Growth rate [1/h]",label=[ "Data" nothing])
-
-plot!(results[1],results[2][1],label=[ "Eq. 1" nothing], line=(3,:green,:dash,))
-plot!(results[1],results[2][2],label=[ "Eq. 2" nothing], line=(3,:red,))
-plot!(results[1] ,results[2][3],label=[ "Eq. 3" nothing],line=(3,:blue,:dashdot,))
-plot!(results[1] ,results[2][4],label=[ "Eq. 4" nothing],line=(2,:black,),legend=:bottomright)
- 
 
 
 # selecting strain S6
@@ -206,26 +193,10 @@ options = SymbolicRegression.Options(;
 gr_sy_reg = downstream_symbolic_regression(res_first_seg_ML,
     feature_matrix,
    7;
- #   options = options,
+    options = options,
 )
  
 
-# Example usage
-expr_array =string.( gr_sy_reg[1])
-
-x_min = convert(Float64,feature_matrix[1,2])
-x_max = convert(Float64,feature_matrix[end,2])
-N = 100
-
-results = evaluate_expressions(expr_array, x_min, x_max, N)
-
-scatter( feature_matrix[:,2],res_first_seg_ML[7,2:end],xlabel= "Aminoacid Concentration [μM]",ylabel = "Growth rate [1/h]",label=[ "Data" nothing])
-
-plot!(results[1],results[2][1],label=[ "Eq. 1" nothing], line=(3,:green,:dash,))
-plot!(results[1],results[2][2],label=[ "Eq. 2" nothing], line=(3,:red,))
-plot!(results[1] ,results[2][3],label=[ "Eq. 3" nothing],line=(3,:blue,:dashdot,))
-plot!(results[1] ,results[2][4],label=[ "Eq. 4" nothing],line=(2,:black,),legend=:bottomright)
- 
 
 
 
@@ -288,30 +259,14 @@ options = SymbolicRegression.Options(;
 
 )
 
-# regression on growth rate
+# regression on nmax
     
-gr_sy_reg = downstream_symbolic_regression(res_second_seg_ML,
+nmax_sy_reg = downstream_symbolic_regression(res_second_seg_ML,
     feature_matrix,
    5;
  #   options = options,
 )
-# Example usage
-expr_array =string.( gr_sy_reg[1])
 
-x_min = convert(Float64,feature_matrix[1,2])
-x_max = convert(Float64,feature_matrix[end,2])
-N = 100
-
-results = evaluate_expressions(expr_array, x_min, x_max, N)
- 
-
-scatter( feature_matrix[:,2],res_second_seg_ML[5,2:end],xlabel= "Aminoacid Concentration [μM]",ylabel ="Total Growth [OD]",label=[ "Data" nothing])
-
-plot!(results[1],results[2][1],label=[ "Eq. 1" nothing], line=(3,:green,:dash,))
-plot!(results[1],results[2][2],label=[ "Eq. 2" nothing], line=(3,:red,))
-plot!(results[1] ,results[2][3],label=[ "Eq. 3" nothing],line=(3,:blue,:dashdot,))
-plot!(results[1] ,results[2][4],label=[ "Eq. 4" nothing],line=(2,:black,),legend=:bottomright)
- 
 
 
 # selecting strain S6
@@ -370,25 +325,11 @@ options = SymbolicRegression.Options(;
 
 )
 
-# regression on growth rate
+# regression on n max
     
-gr_sy_reg = downstream_symbolic_regression(res_second_seg_ML,
+nmax_sy_reg = downstream_symbolic_regression(res_second_seg_ML,
     feature_matrix,
    5;
  #   options = options,
 )
  
-
-results = evaluate_expressions(expr_array, x_min, x_max, N)
- 
-
-scatter( feature_matrix[:,2],res_second_seg_ML[5,2:end],xlabel= "Aminoacid Concentration [μM]",ylabel ="Total Growth [OD]",label=[ "Data" nothing])
-
-plot!(results[1],results[2][1],label=[ "Eq. 1" nothing], line=(3,:green,:dash,))
-plot!(results[1],results[2][2],label=[ "Eq. 2" nothing], line=(3,:red,))
-plot!(results[1] ,results[2][3],label=[ "Eq. 3" nothing],line=(3,:blue,:dashdot,))
-plot!(results[1] ,results[2][4],label=[ "Eq. 4" nothing],line=(2,:black,),legend=:bottomright)
- 
-
-
-

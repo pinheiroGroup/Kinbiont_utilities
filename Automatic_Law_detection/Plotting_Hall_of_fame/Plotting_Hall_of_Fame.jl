@@ -46,10 +46,10 @@ results = evaluate_expressions(expr_array, min_conc, max_conc, N)
 
 
 #plot!(results[1],results[2][1],label=[ "Eq. I" nothing], line=(3,:green,:dash,),xlabel= "Amino acid Concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11)
-plot(results[1],results[2][2],label=[ "Eq. II" nothing], line=(6,:blue,:dashdot,),xlabel= "Amino acid concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,alpha = 0.5)
-plot!(results[1] ,results[2][3],label=[ "Eq. III" nothing],line=(6,:black),xlabel= "Amino acid concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11)
-plot!(results[1],results[2][4],label=[ "Eq. IV" nothing], line=(6,:blue,:dash,),xlabel= "Amino acid concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,alpha = 0.5)
-scatter!( concentration_array,parse.(Float64,first_segment_well[7,:]),xlabel= "Amino acid concentration [μM]",ylabel = "Growth rate [1/h]",label=[ "Data" nothing],size = (600,500),markersize = 6,color= :green,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,legend=:bottomright)
+plot(results[1],results[2][2],label=[ "Eq. II" nothing], line=(6,:blue,:dashdot,),xlabel= "Amino acid concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,alpha = 0.5,ylims=(-0.01,1.0))
+plot!(results[1] ,results[2][3],label=[ "Eq. III" nothing],line=(6,:black),xlabel= "Amino acid concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,ylims=(-0.01,1.0))
+plot!(results[1],results[2][4],label=[ "Eq. IV" nothing], line=(6,:blue,:dash,),xlabel= "Amino acid concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,alpha = 0.5,ylims=(-0.01,1.0))
+scatter!( concentration_array,parse.(Float64,first_segment_well[7,:]),xlabel= "Amino acid concentration [μM]",ylabel = "Growth rate [1/h]",label=[ "Data" nothing],size = (600,500),markersize = 6,color= :green,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,legend=:bottomright,ylims=(-0.01,1.0))
 savefig(string("../Monod_experiment/GR_S5.svg"))
 
  
@@ -74,10 +74,10 @@ results = evaluate_expressions(expr_array, min_conc, max_conc, N)
 
 
 #plot!(results[1],results[2][1],label=[ "Eq. I" nothing], line=(3,:green,:dash,),xlabel= "Amino acid Concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11)
-plot(results[1],results[2][2],label=[ "Eq. X" nothing], line=(6,:blue,:dashdot,),xlabel= "Amino acid concentration [μM]",ylabel = "Total growth [OD]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,alpha = 0.5)
-plot!(results[1] ,results[2][3],label=[ "Eq. XI" nothing],line=(6,:black),xlabel= "Amino acid concentration [μM]",ylabel = "Total Growth [OD]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11)
-plot!(results[1],results[2][4],label=[ "Eq. XII" nothing], line=(6,:blue,:dash,),xlabel= "Amino acid concentration [μM]",ylabel = "Total growth [OD]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,alpha = 0.5)
-scatter!( concentration_array,parse.(Float64,second_segment_well[5,:]),xlabel= "Amino acid concentration [μM]",ylabel = "Total growth [OD]",label=[ "Data" nothing],size = (600,500),markersize = 6,color= :red,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,legend=:bottomright)
+plot(results[1],results[2][2],label=[ "Eq. X" nothing], line=(6,:blue,:dashdot,),xlabel= "Amino acid concentration [μM]",ylabel = "[Max. biomass] [OD]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,alpha = 0.5)
+plot!(results[1] ,results[2][3],label=[ "Eq. XI" nothing],line=(6,:black),xlabel= "Amino acid concentration [μM]",ylabel = "[Max. biomass] [OD]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11)
+plot!(results[1],results[2][4],label=[ "Eq. XII" nothing], line=(6,:blue,:dash,),xlabel= "Amino acid concentration [μM]",ylabel = "[Max. biomass] [OD]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,alpha = 0.5)
+scatter!( concentration_array,parse.(Float64,second_segment_well[5,:]),xlabel= "Amino acid concentration [μM]",ylabel = "[Max. biomass] [OD]",label=[ "Data" nothing],size = (600,500),markersize = 6,color= :red,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,legend=:bottomright)
 savefig(string("../Monod_experiment/Nmax_S5.svg"))
 
  # Plotting results for CHL dose response
@@ -94,7 +94,6 @@ annotation = CSV.read("../Dose_response_sym_regression/Data/annotation_full.csv"
 index_not_used_wells  = findall(annotation[:,2].== "X" .|| annotation[:,2].== "b")
 non_blank_wells = setdiff(1:1:length(annotation[:,1]),index_not_used_wells)
 annotation_test_no_blank= annotation[non_blank_wells,:]
-index_rif_wells  = annotation_test_no_blank[findall( annotation_test_no_blank[:,5].== "Rifampicin" ),1]
 index_df_wells  =  annotation_test_no_blank[findall( annotation_test_no_blank[:,5].== "DF" ),1]
 index_chl_wells  =  annotation_test_no_blank[findall( annotation_test_no_blank[:,5].== "Chloramphenicol" ),1]
 
@@ -102,9 +101,6 @@ index_chl_wells  =  annotation_test_no_blank[findall( annotation_test_no_blank[:
 index_to_use_df = [ findall(  index_df_wells[i,1] .==annotation_test_no_blank[:,1] ) for i in 1:length(index_df_wells[:,1])] 
 index_to_use_df = reduce(vcat,index_to_use_df)
 
-index_to_use_rif =  [ findall( index_rif_wells[i,1] .== annotation_test_no_blank[:,1] ) for i in 1:length(index_rif_wells[:,1])] 
-index_to_use_rif =  reduce(vcat,index_to_use_rif)
-index_to_use_rif =  vcat(index_to_use_df,index_to_use_rif)
 
 index_to_use_chl =   [ findall( index_chl_wells[i,1] .== annotation_test_no_blank[:,1] ) for i in 1:length(index_chl_wells[:,1])] 
 index_to_use_chl =  reduce(vcat,index_to_use_chl)
@@ -113,7 +109,6 @@ index_to_use_chl =  vcat(index_to_use_df,index_to_use_chl)
 
 
 feature_matrix_chl =hcat(annotation_test_no_blank[index_to_use_chl,1], annotation_test_no_blank[index_to_use_chl,6])
-feature_matrix_rif =hcat(annotation_test_no_blank[index_to_use_rif,1], annotation_test_no_blank[index_to_use_rif,6])
 
 
 # selecting the growth rate matrix for rif 
@@ -122,17 +117,10 @@ feature_matrix_rif =hcat(annotation_test_no_blank[index_to_use_rif,1], annotatio
 index_to_use_chl_results = [ findall(  feature_matrix_chl[i,1] .== results_of_fit[2,:]) for i in 1:length( feature_matrix_chl[:,1])] 
 index_to_use_chl_results =  reduce(vcat,index_to_use_chl_results)
 
-index_to_use_rif_results = [ findall(  feature_matrix_rif[i,1] .== results_of_fit[2,:]) for i in 1:length( feature_matrix_chl[:,1])] 
-index_to_use_rif_results =  reduce(vcat,index_to_use_rif_results)
-
-
-
 results_matrix_chl =hcat(results_of_fit[:,1] ,results_of_fit[:,index_to_use_chl_results])
-results_matrix_rif =hcat(results_of_fit[:,1] ,results_of_fit[:,index_to_use_rif_results])
 
 
 concetrations_chl = feature_matrix_chl[:,2]
-concetrations_rif = feature_matrix_rif[:,2]
 
 
 
@@ -151,32 +139,11 @@ results = evaluate_expressions(expr_array, min_conc, max_conc, N)
 
 
 #plot!(results[1],results[2][1],label=[ "Eq. I" nothing], line=(3,:green,:dash,),xlabel= "Amino acid Concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11)
-plot(results[1],results[2][2],label=[ "Eq. XX" nothing], line=(6,:blue,:dashdot,),xlabel= "Chloramphenicol concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,alpha = 0.5)
-plot!(results[1] ,results[2][3],label=[ "Eq. XXI" nothing],line=(6,:black),xlabel= "Chloramphenicol concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11)
-plot!(results[1],results[2][4],label=[ "Eq. XXII" nothing], line=(6,:blue,:dash,),xlabel= "Chloramphenicol concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,alpha = 0.5)
-scatter!( concetrations_chl,parse.(Float64,results_matrix_chl[6,2:end]),xlabel= "Chloramphenicol concentration [μM]",ylabel = "Growth rate [1/h]",label=[ "Data" nothing],size = (600,500),markersize = 6,color= :green,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,legend=:topright)
+plot(results[1],results[2][2],label=[ "Eq. XX" nothing], line=(6,:blue,:dashdot,),xlabel= "Chloramphenicol concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,alpha = 0.5,ylims=(-0.01,0.65))
+plot!(results[1] ,results[2][3],label=[ "Eq. XXI" nothing],line=(6,:black),xlabel= "Chloramphenicol concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,ylims=(-0.01,0.65))
+plot!(results[1],results[2][4],label=[ "Eq. XXII" nothing], line=(6,:blue,:dash,),xlabel= "Chloramphenicol concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,alpha = 0.5,ylims=(-0.01,0.65))
+scatter!( concetrations_chl,parse.(Float64,results_matrix_chl[6,2:end]),xlabel= "Chloramphenicol concentration [μM]",ylabel = "Growth rate [1/h]",label=[ "Data" nothing],size = (600,500),markersize = 6,color= :green,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,legend=:topright,ylims=(-0.01,0.65))
 savefig(string("../Dose_response_sym_regression/GR_VS_CHL.svg"))
 
 
 
-
-# plotting rif hall of fame
-max_conc = convert(Float64,maximum(concetrations_rif))
-min_conc = 0.00
-
-
-Hall_of_Fame = CSV.read("../Dose_response_sym_regression/Hall_of_fame/hall_of_fame_rif.csv", Tables.matrix)
-expr_array =string.( Hall_of_Fame[:,3])
-
-# number of point to plot the function
-N = 100
-
-results = evaluate_expressions(expr_array, min_conc, max_conc, N)
-
-
-#plot!(results[1],results[2][1],label=[ "Eq. I" nothing], line=(3,:green,:dash,),xlabel= "Amino acid Concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11)
-plot(results[1],results[2][2],label=[ "Eq. XX" nothing], line=(6,:blue,:dashdot,),xlabel= "Rifampicin concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,alpha = 0.5)
-plot!(results[1] ,results[2][3],label=[ "Eq. XXI" nothing],line=(6,:black),xlabel= "Rifampicin concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11)
-plot!(results[1],results[2][4],label=[ "Eq. XXII" nothing], line=(6,:blue,:dash,),xlabel= "Rifampicin concentration [μM]",ylabel = "Growth rate [1/h]",size = (600,500),markersize = 6,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,alpha = 0.5)
-scatter!( concetrations_rif,parse.(Float64,results_matrix_rif[6,2:end]),xlabel= "Rifampicin concentration [μM]",ylabel = "Growth rate [1/h]",label=[ "Data" nothing],size = (600,500),markersize = 6,color= :green,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,legend=:topright)
-savefig(string("../Dose_response_sym_regression/GR_VS_RIF.svg"))

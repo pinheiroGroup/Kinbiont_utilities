@@ -146,7 +146,7 @@ CSV.write("../Data/results_full.csv",Tables.table(results_matrix))
 
 
 # we inport the annotation containing the concentrations of the drugs and the type of drug
-# selecting the wells drug free, chl and rif in the annotation file that contains also the concentrations
+# selecting the wells drug free and chl  in the annotation file that contains also the concentrations
 
 
 path_to_annotation_full=  "../Data/annotation_full.csv"
@@ -156,7 +156,6 @@ annotation_test = CSV.read(path_to_annotation_full,header =false,Tables.matrix)
 index_not_used_wells  = findall(annotation_test[:,2].== "X" .|| annotation_test[:,2].== "b")
 non_blank_wells = setdiff(1:1:length(annotation_test[:,1]),index_not_used_wells)
 annotation_test_no_blank= annotation_test[non_blank_wells,:]
-index_rif_wells  = annotation_test_no_blank[findall( annotation_test_no_blank[:,5].== "Rifampicin" ),1]
 index_df_wells  =  annotation_test_no_blank[findall( annotation_test_no_blank[:,5].== "DF" ),1]
 index_chl_wells  =  annotation_test_no_blank[findall( annotation_test_no_blank[:,5].== "Chloramphenicol" ),1]
 
@@ -164,9 +163,6 @@ index_chl_wells  =  annotation_test_no_blank[findall( annotation_test_no_blank[:
 index_to_use_df = [ findall(  index_df_wells[i,1] .==annotation_test_no_blank[:,1] ) for i in 1:length(index_df_wells[:,1])] 
 index_to_use_df = reduce(vcat,index_to_use_df)
 
-index_to_use_rif =  [ findall( index_rif_wells[i,1] .== annotation_test_no_blank[:,1] ) for i in 1:length(index_rif_wells[:,1])] 
-index_to_use_rif =  reduce(vcat,index_to_use_rif)
-index_to_use_rif =  vcat(index_to_use_df,index_to_use_rif)
 
 index_to_use_chl =   [ findall( index_chl_wells[i,1] .== annotation_test_no_blank[:,1] ) for i in 1:length(index_chl_wells[:,1])] 
 index_to_use_chl =  reduce(vcat,index_to_use_chl)
@@ -175,29 +171,22 @@ index_to_use_chl =  vcat(index_to_use_df,index_to_use_chl)
 
 
 feature_matrix_chl =hcat(annotation_test_no_blank[index_to_use_chl,1], annotation_test_no_blank[index_to_use_chl,6])
-feature_matrix_rif =hcat(annotation_test_no_blank[index_to_use_rif,1], annotation_test_no_blank[index_to_use_rif,6])
 
 
-# selecting the growth rate matrix for rif 
-# selectin index of results matrix to use for rif and chl
+# selectin index of results matrix to use for  chl
 
 index_to_use_chl_results = [ findall(  feature_matrix_chl[i,1] .== results_matrix[2,:]) for i in 1:length( feature_matrix_chl[:,1])] 
 index_to_use_chl_results =  reduce(vcat,index_to_use_chl_results)
 
-index_to_use_rif_results = [ findall(  feature_matrix_rif[i,1] .== results_matrix[2,:]) for i in 1:length( feature_matrix_chl[:,1])] 
-index_to_use_rif_results =  reduce(vcat,index_to_use_rif_results)
-
 
 
 results_matrix_chl =hcat(results_matrix[:,1] ,results_matrix[:,index_to_use_chl_results])
-results_matrix_rif =hcat(results_matrix[:,1] ,results_matrix[:,index_to_use_rif_results])
 
 
 
 
 
 scatter(feature_matrix_chl[:,2],results_matrix_chl[6,2:end],xlabel= "CHL Concentration [μM]",ylabel = "Gr [1/h]",label=[ "Data" nothing],size = (600,500),markersize = 6,color= :red,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,legend=:topright)
-scatter(feature_matrix_rif[:,2],results_matrix_rif[6,2:end],xlabel= "rif Concentration [μM]",ylabel = "Gr [1/h]",label=[ "Data" nothing],size = (600,500),markersize = 6,color= :red,tickfontsize = 20,labelfontsize = 20,legendfontsize =11,legend=:topright)
 
 # define SymbolicRegression options
 options = SymbolicRegression.Options(;
@@ -222,16 +211,6 @@ options = SymbolicRegression.Options(;
 
 )
 
-# regression on growth rate rif
-
-
-gr_rif = downstream_symbolic_regression(results_matrix_rif,
-feature_matrix_rif,
-   6;
- #   options = options,
-);
- 
-gr_rif[1]
 
 # regression on growth rate chl
 

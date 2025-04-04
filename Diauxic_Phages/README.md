@@ -5,6 +5,8 @@ This folder presents the scripts to fit with segmetend ODE models the following:
 
 2. E. coli and T4 bacteriophage data from "Fast phage detection and quantification: An optical density-based approach", 2019, Rajnovic et al, https://doi.org/10.1371/journal.pone.0216292
 
+In the zip folder are present all the change points, the AICc scores, and the fits for the diauxic dataset for each model with number of  change point between 1 and 5.
+
 
 To see other usage examples please check the documentation
 

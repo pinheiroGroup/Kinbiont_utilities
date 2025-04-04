@@ -7,8 +7,8 @@ This folder presents the scripts to fit with segmetend ODE models the following:
 
 In the zip folder are present all the change points, the AICc scores, and the fits for the diauxic dataset for each model with number of  change point between 1 and 5.
 
+In res_fig_3_e.csv the dataframe to plot fig 3 panel E
 
-To see other usage examples please check the documentation
 
 
 

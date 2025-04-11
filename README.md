@@ -10,6 +10,6 @@ The contents of the folder are as follows:
 - **synthetic_tests** - Synthetic tests for SM and other related tasks.  
 - **Notebooks** - Notebooks containing compact versions of most of the main text analyses.  
 
-For stable documentation of the package and various examples, please consult the [Documentation](https://pinheirogroup.github.io/Kinbiont.jl/)).  
+For stable documentation of the package and various examples, please consult the [Documentation](https://pinheirogroup.github.io/Kinbiont.jl/).  
 
 

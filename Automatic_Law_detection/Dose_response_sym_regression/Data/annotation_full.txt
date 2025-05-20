@@ -1,0 +1,48 @@
+A1,b,M9+glucose,,,,,
+A2,X,M9+glucose,,,,,
+A3,BW25113 (DSM),M9+glucose,"Glucose-0.5",DF,0,B5,12
+A4,BW25113 (DSM),M9+glucose,"Glucose-0.5",DF,0,B5,12
+A5,BW25113 (DSM),M9+glucose,"Glucose-0.5",DF,0,B6,12
+A6,BW25113 (DSM),M9+glucose,"Glucose-0.5",DF,0,B6,12
+A7,b,M9+glucose,,,,,
+A8,X,M9+glucose,,,,,
+B1,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,2,B5,12
+B2,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,2,B5,12
+B3,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,2,B6,12
+B4,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,2,B6,12
+B5,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,3,B5,12
+B6,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,3,B5,12
+B7,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,3,B6,12
+B8,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,3,B6,12
+C1,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,4,B5,12
+C2,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,4,B5,12
+C3,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,4,B6,12
+C4,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,4,B6,12
+C5,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,6,B5,12
+C6,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,6,B5,12
+C7,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,6,B6,12
+C8,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,6,B6,12
+D1,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,8,B5,12
+D2,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,8,B5,12
+D3,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,8,B6,12
+D4,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,8,B6,12
+D5,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,9,B5,12
+D6,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,9,B5,12
+D7,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,9,B6,12
+D8,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,9,B6,12
+E1,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,12,B5,12
+E2,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,12,B5,12
+E3,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,12,B6,12
+E4,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,12,B6,12
+E5,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,12,B5,12
+E6,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,12,B5,12
+E7,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,12,B6,12
+E8,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,12,B6,12
+F1,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,16,B5,12
+F2,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,16,B5,12
+F3,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,16,B6,12
+F4,BW25113 (DSM),M9+glucose,"Glucose-0.5",Chloramphenicol,16,B6,12
+F5,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,15,B5,12
+F6,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,15,B5,12
+F7,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,15,B6,12
+F8,BW25113 (DSM),M9+glucose,"Glucose-0.5",Rifampicin,15,B6,12

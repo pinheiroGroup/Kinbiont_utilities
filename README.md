@@ -1,4 +1,5 @@
 In this repository, you can find the scripts and data to reproduce the results of the Kinbiont paper.  
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15487828.svg)](https://doi.org/10.5281/zenodo.15487828)
 
 The contents of the folder are as follows:  
 

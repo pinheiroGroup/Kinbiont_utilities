@@ -8,7 +8,8 @@ The contents of the folder are as follows:
 - **Diauxic_Phages** - Data and scripts for the segmentation fits of data from ["Fast phage detection and quantification: An optical density-based approach"](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0216292), as well as diauxic growth data from ["Diauxic lags explain unexpected coexistence in multi-resource environments"](https://www.embopress.org/doi/full/10.15252/msb.202110630).  
 - **EtOH_production** - Fitting of multidimensional ODEs on data from ["Mechanistic Modelling of Biomass Growth, Glucose Consumption, and Ethanol Production by Kluyveromyces marxianus in Batch Fermentation"](https://www.mdpi.com/1099-4300/25/3/497).  
 - **synthetic_tests** - Synthetic tests for SM and other related tasks.  
-- **Notebooks** - Notebooks containing compact versions of most of the main text analyses.  
+- **Notebooks** - Notebooks containing compact versions of most of the main text analyses.
+- **Source_Data** - The txt files of the data generated for the paper.
 
 For stable documentation of the package and various examples, please consult the [Documentation](https://pinheirogroup.github.io/Kinbiont.jl/).  
 

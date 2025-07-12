@@ -1,7 +1,13 @@
-In this repository, you can find the scripts and data to reproduce the results of the Kinbiont paper.  
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15487828.svg)](https://doi.org/10.5281/zenodo.15487828)
 
-The contents of the folder are as follows:  
+
+In this repository, you can find the scripts and data to reproduce the results of the 
+[Kinbiont paper](https://www.nature.com/articles/s41467-025-61592-6).
+
+Angaroni F., Peruzzi A., Alvarenga E. Z., Pinheiro F., Translating microbial kinetics into quantitative responses and testable hypotheses using Kinbiont, 2025, Nature Communication, 6440, 16, 1, https://doi.org/10.1038/s41467-025-61592-6
+
+
+The contents of the folders are as follows:  
 
 - **Automatic_Law_detection** - Scripts and data to reproduce the law detection of amino acid limitation and drug dose response.  
 - **CoCultures_ODEs_system** - Scripts and data for the decision tree example using data from ["Construction and Modeling of a Coculture Microplate for Real-Time Measurement of Microbial Interactions"](https://journals.asm.org/doi/10.1128/msystems.00017-21).  
